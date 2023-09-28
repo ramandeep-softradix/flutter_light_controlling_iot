@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_smart_lighting/Core/utils/image_resources.dart';
 import 'package:get/get.dart';
 import 'package:flutter_smart_lighting/Core/common_functionality/dismiss_keyboard.dart';
 import 'package:flutter_smart_lighting/Core/common_ui/asset_widget/common_image_widget.dart';
@@ -276,9 +277,13 @@ Widget commonPasswordText(
                             onPress();
                           },
                     child: AssetWidget(
-                      color: lightColorPalette.black,
+                       color: lightColorPalette.black,
                       asset: Asset(
-                          type: AssetType.svg, path: passwordVisible ? "" : ""),
+                          type: AssetType.svg,
+                          path:
+                          passwordVisible
+                              ? ImageResource.hideEye
+                              : ImageResource.openEye),
                     ),
                   )),
             ],

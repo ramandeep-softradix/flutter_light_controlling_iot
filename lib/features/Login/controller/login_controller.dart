@@ -7,7 +7,7 @@ import 'package:flutter_smart_lighting/Core/common_ui/snackbar/snackbar.dart';
 import 'package:get/get.dart';
 import 'package:flutter_smart_lighting/Core/utils/Extension.dart';
 import 'package:flutter_smart_lighting/Core/utils/Routes.dart';
-
+import '../../../Core/storage/local_storage.dart';
 import '../../../Core/utils/common_string.dart';
 
 class LoginController extends GetxController {
@@ -17,6 +17,8 @@ class LoginController extends GetxController {
   var emailFocusNode = FocusNode().obs;
   var passwordFocusNode = FocusNode().obs;
   bool singleTap = false;
+  RxBool isShowLoader = false.obs;
+  RxBool passwordVisibility = false.obs;
 
   addFocusListeners() {
     emailFocusNode.value.addListener(() {
@@ -30,6 +32,10 @@ class LoginController extends GetxController {
   disposeFocusListeners() {
     emailFocusNode.value.removeListener(() {});
     passwordFocusNode.value.removeListener(() {});
+  }
+
+  passwordShowHide() {
+    passwordVisibility.value = !passwordVisibility.value;
   }
 
   @override
@@ -50,6 +56,11 @@ class LoginController extends GetxController {
     super.onInit();
   }
 
+  setShowLoader({required bool value}) {
+    isShowLoader.value = value;
+    isShowLoader.refresh();
+  }
+
   validation() async {
     if (!singleTap) {
       if (emailController.text.isEmpty) {
@@ -63,9 +74,17 @@ class LoginController extends GetxController {
       } else if (!passwordController.text.isValidPassword()) {
         snackbar(Validations.kMsgPasswordAtleast.tr);
       } else {
+        setShowLoader(value: true);
         UserCredential? response = await AuthenticationHelper().login(
             email: emailController.text, password: passwordController.text);
-        if (response?.user?.uid != null) {
+        setShowLoader(value: false);
+        print(response);
+        if (response?.user?.refreshToken != null) {
+          String? token = response?.user?.refreshToken;
+          String? email = response?.user?.email;
+          Prefs.write(Prefs.email, email);
+          Prefs.write(Prefs.token, token);
+          emptyTextFieldsData();
           gotowifiScreen();
         }
       }
@@ -74,6 +93,12 @@ class LoginController extends GetxController {
       Future.delayed(const Duration(seconds: 3))
           .then((value) => singleTap = false);
     }
+  }
+
+  emptyTextFieldsData() {
+    emailController.text = "";
+    passwordController.text = "";
+
   }
 
   gotoSignupScreen() {

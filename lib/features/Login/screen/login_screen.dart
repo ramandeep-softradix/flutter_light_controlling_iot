@@ -1,6 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_smart_lighting/Core/common_ui/common_loader/common_loader.dart';
 import 'package:get/get.dart';
 import 'package:flutter_smart_lighting/Core/utils/common_string.dart';
 import 'package:flutter_smart_lighting/Core/common_ui/asset_widget/common_image_widget.dart';
@@ -13,41 +13,45 @@ import 'package:flutter_smart_lighting/features/Login/controller/login_controlle
 import '../../../Core/theme/app_color_palette.dart';
 
 class LoginScreen extends GetView<LoginController> {
-
   @override
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
-          child: Form(
-            child: Container(
-              color: Colors.white,
-              child: Column(
-                children: [
-                  SizedBox(height: 70.h),
-                  topImageWidget(),
-                  SizedBox(height: 20.h),
-                  welcometitleTextWidget(),
-                  SizedBox(height: 5.h),
-                  filldetailTextWidget(),
-                  SizedBox(height: 20.h),
-                  emailTextFieldWidget(),
-                  SizedBox(height: 20.h),
-                  passwordTextFieldWidget(),
-                  SizedBox(height: 40.h),
-                  loginButtonWidget(),
-                  SizedBox(height: 10.h),
-                  signUpButtonWidget(),
-                ],
+          child: Stack(
+            children: [
+              Container(
+                color: Colors.white,
+                child: Column(
+                  children: [
+                    SizedBox(height: 70.h),
+                    topImageWidget(),
+                    SizedBox(height: 20.h),
+                    welcometitleTextWidget(),
+                    SizedBox(height: 5.h),
+                    filldetailTextWidget(),
+                    SizedBox(height: 20.h),
+                    emailTextFieldWidget(),
+                    SizedBox(height: 20.h),
+                    passwordTextFieldWidget(),
+                    SizedBox(height: 40.h),
+                    loginButtonWidget(),
+                    SizedBox(height: 10.h),
+                    signUpButtonWidget(),
+                  ],
+                ),
               ),
-            ),
+              CommonLoader(isLoading: controller.isShowLoader.value),
+            ],
           ),
         )));
   }
 
   Widget topImageWidget() {
     return AssetWidget(
-        asset: Asset(type: AssetType.png, path: ImageResource.imgsmarthome),height: 150.h,);
+      asset: Asset(type: AssetType.png, path: ImageResource.imgsmarthome),
+      height: 150.h,
+    );
   }
 
   Widget welcometitleTextWidget() {
@@ -77,7 +81,7 @@ class LoginScreen extends GetView<LoginController> {
       alignment: Alignment.centerLeft,
       child: AppTextWidget(
         text: CommonString.loginsuccess.tr,
-        style: CustomTextTheme.heading1WithLetterSpacing(
+        style: CustomTextTheme.heading1(
           color: lightColorPalette.black,
         ),
       ).paddingOnly(left: 16.w),
@@ -96,12 +100,14 @@ class LoginScreen extends GetView<LoginController> {
 
   Widget passwordTextFieldWidget() {
     return commonPasswordText(
-            title: CommonString.password.tr,
-            passwordVisible: true,
-            hint: CommonString.passwordplaceholder.tr,
-            controller: controller.passwordController,
-            focusNode: controller.passwordFocusNode())
-        .paddingOnly(left: 16.w, right: 16.w);
+        title: CommonString.password.tr,
+        passwordVisible: controller.passwordVisibility.value,
+        hint: CommonString.passwordplaceholder.tr,
+        controller: controller.passwordController,
+        focusNode: controller.passwordFocusNode(),
+        onPress: () {
+          controller.passwordShowHide();
+        }).paddingOnly(left: 16.w, right: 16.w);
   }
 
   Widget loginButtonWidget() {

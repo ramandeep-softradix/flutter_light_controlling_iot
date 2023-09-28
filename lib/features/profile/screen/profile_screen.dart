@@ -32,14 +32,18 @@ class ProfileScreen extends GetView<ProfileController> {
             children: [
               SizedBox(height: 20.h),
               userImageWidget(),
-              // SizedBox(height: 20.h),
-              // profileTextWidget(),
               SizedBox(height: 20.h),
-              nameTextFieldWidget(),
+              titleTextWidget(CommonString.username),
+              SizedBox(height: 5.h),
+              customTextWidget(controller.name.value),
               SizedBox(height: 20.h),
-              surNameTextFieldWidget(),
+              titleTextWidget(CommonString.usersurname),
+              SizedBox(height: 5.h),
+              customTextWidget(controller.surname.value),
               SizedBox(height: 20.h),
-              emailTextFieldWidget(),
+              titleTextWidget(CommonString.email),
+              SizedBox(height: 5.h),
+              customTextWidget(controller.useremail.value),
               SizedBox(height: 40.h),
               bottomContainerWidget(),
               SizedBox(height: 40.h),
@@ -70,42 +74,28 @@ class ProfileScreen extends GetView<ProfileController> {
     );
   }
 
-  Widget profileTextWidget() {
+  Widget titleTextWidget(String title) {
     return Align(
       alignment: Alignment.centerLeft,
       child: AppTextWidget(
-        text: CommonString.profile.tr,
-        style: CustomTextTheme.heading1WithLetterSpacing(color: Colors.black),
+        text: title,
+        style: CustomTextTheme.normalText(color: Colors.black),
       ).paddingOnly(left: 16.w),
     );
   }
 
-  Widget nameTextFieldWidget() {
-    return commonTextFieldWidget(
-            controller: controller.nameController,
-            title: CommonString.username.tr,
-            readOnly: true,
-            focusNode: FocusNode())
-        .paddingOnly(left: 16.w, right: 16.w);
-  }
-
-  Widget surNameTextFieldWidget() {
-    return commonTextFieldWidget(
-            controller: controller.surnameController,
-            readOnly: true,
-            title: CommonString.usersurname.tr,
-            focusNode: FocusNode())
-        .paddingOnly(left: 16.w, right: 16.w);
-  }
-
-  Widget emailTextFieldWidget() {
-    return commonEmailTextFieldWidget(
-            controller: controller.emailController,
-            title: CommonString.email.tr,
-            readOnly: true,
-            focusNode: FocusNode(),
-            isShowCrossIcon: true)
-        .paddingOnly(left: 16.w, right: 16.w);
+  Widget customTextWidget(String title) {
+    return Container(
+        height: 48.h,
+        decoration: decoration(isSelected: false),
+        child: Align(
+          alignment: Alignment.centerLeft,
+          child: AppTextWidget(
+                  text: title,
+                  style: CustomTextTheme.normalText(
+                      color: lightColorPalette.black))
+              .paddingOnly(left: 10.w, right: 10.w),
+        )).paddingSymmetric(horizontal: 16.w);
   }
 
   Widget bottomContainerWidget() {
@@ -160,7 +150,7 @@ class ProfileScreen extends GetView<ProfileController> {
   Widget yesButtonWidget() {
     return commonButtonWithBorder(
         onPress: () {
-          Get.toNamed(MyRoutes.root);
+          controller.logout();
         },
         commonButtonBottonText: CommonString.yes.tr);
   }

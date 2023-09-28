@@ -18,9 +18,14 @@ class WifiLoginController extends GetxController {
   var wifiNameFocusNode = FocusNode().obs;
   var passwordFocusNode = FocusNode().obs;
   bool singleTap = false;
+  RxBool passwordVisibility = false.obs;
 
   RxString wifiSsid = 'N/A'.obs;
   RxString bssid = 'N/A'.obs;
+
+  passwordShowHide() {
+    passwordVisibility.value = !passwordVisibility.value;
+  }
 
   addFocusListeners() {
     wifiNameFocusNode.value.addListener(() {

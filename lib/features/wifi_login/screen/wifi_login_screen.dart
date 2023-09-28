@@ -77,10 +77,12 @@ class WifiLoginScreen extends GetView<WifiLoginController> {
   Widget passwordTextFieldWidget() {
     return commonPasswordText(
             title: CommonString.wifipassword.tr,
-            passwordVisible: true,
+            passwordVisible: controller.passwordVisibility.value,
             hint: CommonString.wifipasswordplaceholder.tr,
             controller: controller.passwordController,
-            focusNode: controller.passwordFocusNode())
+            focusNode: controller.passwordFocusNode(),onPress: (){
+              controller.passwordShowHide();
+    })
         .paddingOnly(left: 16.w, right: 16.w);
   }
 

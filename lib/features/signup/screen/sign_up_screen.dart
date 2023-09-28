@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_smart_lighting/Core/common_ui/common_loader/common_loader.dart';
 import 'package:get/get.dart';
 import 'package:flutter_smart_lighting/Core/common_ui/common_button/common_button.dart';
 import 'package:flutter_smart_lighting/Core/common_ui/text/app_text_widget.dart';
@@ -22,30 +23,35 @@ class SignUpScreen extends GetView<SignUpController> {
     return Obx(() => Scaffold(
           backgroundColor: Colors.white,
           body: SingleChildScrollView(
-            child: Container(
-              color: Colors.white,
-              child: Column(
-                children: [
-                  commonAppBarWidget(title: CommonString.signup),
-                  SizedBox(height: 30.h),
-                  signuptitleTextWidget(),
-                  SizedBox(height: 10.h),
-                  filldetailTextWidget(),
-                  SizedBox(height: 20.h),
-                  nameTextFieldWidget(),
-                  SizedBox(height: 20.h),
-                  surNameTextFieldWidget(),
-                  SizedBox(height: 20.h),
-                  emailTextFieldWidget(),
-                  SizedBox(height: 20.h),
-                  passwordTextFieldWidget(),
-                  SizedBox(height: 20.h),
-                  SignUpButtonWidget(),
-                  SizedBox(height: 10.h),
-                  loginButtonWidget(),
-                  SizedBox(height: 40.h),
-                ],
-              ),
+            child: Stack(
+              children: [
+                Container(
+                  color: Colors.white,
+                  child: Column(
+                    children: [
+                      commonAppBarWidget(title: CommonString.signup),
+                      SizedBox(height: 30.h),
+                      signuptitleTextWidget(),
+                      SizedBox(height: 10.h),
+                      filldetailTextWidget(),
+                      SizedBox(height: 20.h),
+                      nameTextFieldWidget(),
+                      SizedBox(height: 20.h),
+                      surNameTextFieldWidget(),
+                      SizedBox(height: 20.h),
+                      emailTextFieldWidget(),
+                      SizedBox(height: 20.h),
+                      passwordTextFieldWidget(),
+                      SizedBox(height: 20.h),
+                      SignUpButtonWidget(),
+                      SizedBox(height: 10.h),
+                      loginButtonWidget(),
+                      SizedBox(height: 40.h),
+                    ],
+                  ),
+                ),
+                CommonLoader(isLoading: controller.isShowLoader.value)
+              ],
             ),
           ),
         ));
@@ -56,7 +62,7 @@ class SignUpScreen extends GetView<SignUpController> {
       alignment: Alignment.centerLeft,
       child: AppTextWidget(
         text: CommonString.signup.tr,
-        style: CustomTextTheme.heading1WithLetterSpacing(color: Colors.black),
+        style: CustomTextTheme.heading1(color: Colors.black),
       ).paddingOnly(left: 16.w),
     );
   }
@@ -84,7 +90,7 @@ class SignUpScreen extends GetView<SignUpController> {
     return commonTextFieldWidget(
             controller: controller.surnameController,
             hint: CommonString.usersurnameplaceholder.tr,
-            title: CommonString.usersurnameplaceholder.tr,
+            title: CommonString.usersurname.tr,
             focusNode: controller.surNameFocusNode())
         .paddingOnly(left: 16.w, right: 16.w);
   }
@@ -101,12 +107,14 @@ class SignUpScreen extends GetView<SignUpController> {
 
   Widget passwordTextFieldWidget() {
     return commonPasswordText(
-            title: CommonString.password.tr,
-            hint: CommonString.passwordplaceholder.tr,
-            passwordVisible: true,
-            controller: controller.passwordController,
-            focusNode: controller.passwordFocusNode())
-        .paddingOnly(left: 16.w, right: 16.w);
+        title: CommonString.password.tr,
+        hint: CommonString.passwordplaceholder.tr,
+        passwordVisible: controller.passwordVisibility.value,
+        controller: controller.passwordController,
+        focusNode: controller.passwordFocusNode(),
+        onPress: () {
+          controller.passwordShowHide();
+        }).paddingOnly(left: 16.w, right: 16.w);
   }
 
   Widget SignUpButtonWidget() {
