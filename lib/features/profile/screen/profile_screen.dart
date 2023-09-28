@@ -47,7 +47,6 @@ class ProfileScreen extends GetView<ProfileController> {
               SizedBox(height: 20.h),
               logoutButtonWidget(),
               SizedBox(height: 40.h),
-
             ],
           ),
         ),
