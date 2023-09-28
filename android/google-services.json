@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "749299147906",
+    "project_id": "fluttersmartlighting",
+    "storage_bucket": "fluttersmartlighting.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:749299147906:android:b4e0b609f76ba9fd54809b",
+        "android_client_info": {
+          "package_name": "com.example.flutterSmartLighting"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChJXyNevyTnv7OxnFovEKigOKAKuwDRrk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
