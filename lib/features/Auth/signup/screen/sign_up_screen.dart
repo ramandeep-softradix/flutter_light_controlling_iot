@@ -8,12 +8,10 @@ import 'package:flutter_smart_lighting/Core/common_ui/common_button/common_butto
 import 'package:flutter_smart_lighting/Core/common_ui/text/app_text_widget.dart';
 import 'package:flutter_smart_lighting/Core/common_ui/textfields/app_common_text_form_field.dart';
 import 'package:flutter_smart_lighting/Core/theme/app_color_palette.dart';
-import 'package:flutter_smart_lighting/features/signup/controller/sign_up_controller.dart';
 
-import '../../../Core/appbar/common_appbar.dart';
-import '../../../Core/utils/common_string.dart';
-import '../../../Core/common_ui/asset_widget/common_image_widget.dart';
-import '../../../Core/utils/image_resources.dart';
+import '../../../../Core/appbar/common_appbar.dart';
+import '../../../../Core/utils/common_string.dart';
+import '../controller/sign_up_controller.dart';
 
 class SignUpScreen extends GetView<SignUpController> {
   const SignUpScreen({super.key});

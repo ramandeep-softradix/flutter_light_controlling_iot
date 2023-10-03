@@ -2,19 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_lighting/Core/appbar/common_appbar.dart';
-import 'package:flutter_smart_lighting/Core/utils/Routes.dart';
-import 'package:flutter_smart_lighting/features/profile/controller/profile_controller.dart';
-import 'package:flutter_smart_lighting/main.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-
-import '../../../Core/utils/common_string.dart';
-import '../../../Core/common_ui/asset_widget/common_image_widget.dart';
-import '../../../Core/common_ui/common_button/common_button.dart';
-import '../../../Core/common_ui/text/app_text_widget.dart';
-import '../../../Core/common_ui/textfields/app_common_text_form_field.dart';
-import '../../../Core/theme/app_color_palette.dart';
-import '../../../Core/utils/image_resources.dart';
+import '../../../../Core/common_ui/asset_widget/common_image_widget.dart';
+import '../../../../Core/common_ui/common_button/common_button.dart';
+import '../../../../Core/common_ui/text/app_text_widget.dart';
+import '../../../../Core/theme/app_color_palette.dart';
+import '../../../../Core/utils/common_string.dart';
+import '../../../../Core/utils/image_resources.dart';
+import '../controller/profile_controller.dart';
 
 class ProfileScreen extends GetView<ProfileController> {
   var controller = Get.put(ProfileController());

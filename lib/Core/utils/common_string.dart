@@ -90,6 +90,11 @@ class Validations {
   static const entervaildwifipassword = "Please enter vaild wifi password";
   static const msgminwifipasswordatleast = "Please enter minimum 8 characters with combination.";
 
+  static const enterdevicename = "Please enter device name";
+
+  static const enterdeviceid = "Please enter device id";
+
+
 }
 
 class InternetConnection {

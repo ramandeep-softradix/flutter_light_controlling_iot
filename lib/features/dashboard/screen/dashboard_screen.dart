@@ -17,9 +17,9 @@ class DashboardScreen extends GetView<DashboardController> {
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
       backgroundColor: controller.isDarkMode.value
-          ? darkMode.backgroundColor
-          : lightMode.backgroundColor,
-      appBar: commonAppBarWidget(title: CommonString.appName),
+          ? lightMode.backgroundColor
+          : darkMode.backgroundColor,
+      appBar: commonAppBarWidget(title: CommonString.appName,isBack: true),
       body: Center(
         child: Column(
           children: [
@@ -38,11 +38,11 @@ class DashboardScreen extends GetView<DashboardController> {
 
   Widget titleTextWidget() {
     return AppTextWidget(
-      text: CommonString.lightOnAndOff,
+      text: controller.devicename.value,
       style: CustomTextTheme.heading1(
         color: controller.isDarkMode.value
-            ? lightMode.backgroundColor
-            : darkMode.backgroundColor,
+            ? darkMode.backgroundColor
+            : lightMode.backgroundColor,
       ),
     );
   }
@@ -51,18 +51,18 @@ class DashboardScreen extends GetView<DashboardController> {
     return AnimatedToggle(
       values: [CommonString.on, CommonString.off],
       textColor: controller.isDarkMode.value
-          ? darkMode.textColor
-          : lightMode.textColor,
+          ? lightMode.textColor
+          : darkMode.textColor,
       backgroundColor: controller.isDarkMode.value
-          ? darkMode.toggleBackgroundColor
-          : lightMode.toggleBackgroundColor,
+          ? lightMode.toggleBackgroundColor
+          : darkMode.toggleBackgroundColor,
       buttonColor: controller.isDarkMode.value
-          ? darkMode.toggleButtonColor
-          : lightMode.toggleButtonColor,
-      shadows: controller.isDarkMode.value ? darkMode.shadow : lightMode.shadow,
+          ? lightMode.toggleButtonColor
+          : darkMode.toggleButtonColor,
+      shadows: controller.isDarkMode.value ? lightMode.shadow : darkMode.shadow,
       onToggleCallback: (index) {
         controller.changeThemeMode();
-      },
+      }, initialPosition: controller.isDarkMode.value,
     );
   }
 
@@ -78,8 +78,8 @@ class DashboardScreen extends GetView<DashboardController> {
             shape: BoxShape.circle,
             gradient: LinearGradient(
               colors: controller.isDarkMode.value
-                  ? darkMode.gradient
-                  : lightMode.gradient,
+                  ? lightMode.gradient
+                  : darkMode.gradient,
               begin: Alignment.bottomLeft,
               end: Alignment.topRight,
             ),
@@ -100,8 +100,8 @@ class DashboardScreen extends GetView<DashboardController> {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: controller.isDarkMode.value
-                    ? darkMode.backgroundColor
-                    : lightMode.backgroundColor,
+                    ? lightMode.backgroundColor
+                    : darkMode.backgroundColor,
               ),
             ),
           ),

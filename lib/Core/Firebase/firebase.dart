@@ -2,13 +2,25 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_smart_lighting/Core/Firebase/devices_list.dart';
 import 'package:flutter_smart_lighting/Core/common_ui/snackbar/snackbar.dart';
 import 'package:get/get.dart';
+import 'dart:io';
 
 class FirebaseInit {
   Future<void> onIint() async {
     WidgetsFlutterBinding.ensureInitialized();
-    await Firebase.initializeApp();
+    if (Platform.isAndroid) {
+      await Firebase.initializeApp(
+          options: const FirebaseOptions(
+        apiKey: 'AIzaSyChJXyNevyTnv7OxnFovEKigOKAKuwDRrk',
+        appId: '1:749299147906:android:c0bff14bd0cd9f2054809b',
+        messagingSenderId: '749299147906',
+        projectId: 'fluttersmartlighting',
+      ));
+    } else {
+      await Firebase.initializeApp();
+    }
   }
 }
 
@@ -39,7 +51,6 @@ class AuthenticationHelper {
         'role': 'user',
         'surname': surname,
       });
-
       return response;
     } on FirebaseAuthException catch (e) {
       snackbar(e.code);
@@ -58,17 +69,100 @@ class AuthenticationHelper {
     }
   }
 
- Future<QuerySnapshot?> getProfile({required String userEmail}) async {
-    final QuerySnapshot snap = await FirebaseFirestore.instance
-        .collection('users')
-        .where('email', isEqualTo: userEmail)
-        .get();
-    return snap;
+  Future<QuerySnapshot?> getProfile({required String userEmail}) async {
+    try {
+      final QuerySnapshot snap = await FirebaseFirestore.instance
+          .collection('users')
+          .where('email', isEqualTo: userEmail)
+          .get();
+      return snap;
+    } on FirebaseAuthException catch (e) {
+      snackbar(e.code);
+    }
+  }
+
+  Future<DocumentReference?> addDevices(
+      {required String devicename, required String deviceid}) async {
+    try {
+      final DocumentReference result = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user?.uid)
+          .collection("devices")
+          .add({
+        "devicename": devicename,
+        "deviceid": deviceid,
+        "status": false,
+      });
+      await FirebaseFirestore.instance
+          .collection("users")
+          .doc(user.uid)
+          .collection("devices")
+          .doc(result.id)
+          .update({
+        "uid": result.id,
+      });
+      return result;
+    } on FirebaseAuthException catch (e) {
+      snackbar(e.code);
+    }
+  }
+
+  Future<QuerySnapshot?> getAllDeviceDocumentData() async {
+    try {
+      final QuerySnapshot data = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user?.uid)
+          .collection("devices")
+          .get();
+      return data;
+    } on FirebaseAuthException catch (e) {
+      snackbar(e.code);
+    }
+  }
+
+  updateDevices(
+      {required String devicename,
+      required String deviceid,
+      required String deviceuid}) async {
+    try {
+      final response = await FirebaseFirestore.instance
+          .collection("users")
+          .doc(user.uid)
+          .collection("devices")
+          .doc(deviceuid)
+          .update({
+        "devicename": devicename,
+        "deviceid": deviceid,
+      });
+      return response;
+    } on FirebaseAuthException catch (e) {
+      snackbar(e.code);
+    }
+  }
+
+  updateDevicesStatus({required String deviceuid, required bool status}) async {
+    try {
+      final response = await FirebaseFirestore.instance
+          .collection("users")
+          .doc(user.uid)
+          .collection("devices")
+          .doc(deviceuid)
+          .update({
+        "status": status,
+      });
+      return response;
+    } on FirebaseAuthException catch (e) {
+      snackbar(e.code);
+    }
   }
 
   //SIGN OUT METHOD
   Future signOut() async {
-    await auth.signOut();
-    print('signout');
+    try {
+      await auth.signOut();
+      print('signout');
+    } on FirebaseAuthException catch (e) {
+      snackbar(e.code);
+    }
   }
 }

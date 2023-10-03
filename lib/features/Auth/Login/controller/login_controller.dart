@@ -7,11 +7,11 @@ import 'package:flutter_smart_lighting/Core/common_ui/snackbar/snackbar.dart';
 import 'package:get/get.dart';
 import 'package:flutter_smart_lighting/Core/utils/Extension.dart';
 import 'package:flutter_smart_lighting/Core/utils/Routes.dart';
-import '../../../Core/storage/local_storage.dart';
-import '../../../Core/utils/common_string.dart';
+
+import '../../../../Core/storage/local_storage.dart';
+import '../../../../Core/utils/common_string.dart';
 
 class LoginController extends GetxController {
-  RxBool isLoginViewHiden = true.obs;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   var emailFocusNode = FocusNode().obs;
@@ -34,9 +34,6 @@ class LoginController extends GetxController {
     passwordFocusNode.value.removeListener(() {});
   }
 
-  passwordShowHide() {
-    passwordVisibility.value = !passwordVisibility.value;
-  }
 
   @override
   void onClose() {
@@ -60,6 +57,9 @@ class LoginController extends GetxController {
     isShowLoader.value = value;
     isShowLoader.refresh();
   }
+  passwordShowHide() {
+    passwordVisibility.value = !passwordVisibility.value;
+  }
 
   validation() async {
     if (!singleTap) {
@@ -79,8 +79,8 @@ class LoginController extends GetxController {
             email: emailController.text, password: passwordController.text);
         setShowLoader(value: false);
         print(response);
-        if (response?.user?.refreshToken != null) {
-          String? token = response?.user?.refreshToken;
+        if (response?.user?.uid != null) {
+          String? token = response?.user?.uid;
           String? email = response?.user?.email;
           Prefs.write(Prefs.email, email);
           Prefs.write(Prefs.token, token);

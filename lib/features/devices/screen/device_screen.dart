@@ -2,10 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_lighting/Core/appbar/common_appbar.dart';
+import 'package:flutter_smart_lighting/Core/common_ui/common_loader/common_loader.dart';
 import 'package:flutter_smart_lighting/Core/utils/common_string.dart';
 import 'package:flutter_smart_lighting/Core/common_ui/textfields/app_common_text_form_field.dart';
 import 'package:flutter_smart_lighting/Core/theme/app_color_palette.dart';
 import 'package:flutter_smart_lighting/Core/utils/Routes.dart';
+import 'package:flutter_smart_lighting/features/devices/controller/device_controller.dart';
 import 'package:get/get.dart';
 
 import '../../../Core/common_ui/asset_widget/common_image_widget.dart';
@@ -14,7 +16,7 @@ import '../../../Core/common_ui/text/app_text_widget.dart';
 import '../../../Core/utils/image_resources.dart';
 
 class DeviceScreen extends StatelessWidget {
-  const DeviceScreen({super.key});
+  var controller = Get.put(DeviceController());
 
   @override
   Widget build(BuildContext context) {
@@ -26,15 +28,21 @@ class DeviceScreen extends StatelessWidget {
         child: Icon(Icons.add),
         backgroundColor: lightColorPalette.black,
         onPressed: () {
+          controller.isUpdate.value = false;
           addDeviceNetwork(title: CommonString.addDevice);
         },
       ),
-      body: Column(
+      body: Stack(
         children: [
-          SizedBox(height: 10.h),
-          noOfDeviceTextWidget(),
-          SizedBox(height: 10.h),
-          deviceListViewWidget(),
+          Column(
+            children: [
+              SizedBox(height: 10.h),
+              noOfDeviceTextWidget(),
+              SizedBox(height: 10.h),
+              deviceListViewWidget(),
+            ],
+          ),
+          CommonLoader(isLoading: controller.isShowLoader.value),
         ],
       ),
     );
@@ -45,11 +53,15 @@ class DeviceScreen extends StatelessWidget {
       child: ListView.builder(
           padding: EdgeInsets.zero,
           physics: const RangeMaintainingScrollPhysics(),
-          itemCount: 5,
+          itemCount: controller.deviceList.length,
           itemBuilder: (BuildContext context, int index) {
             return InkWell(
               onTap: () {
-                Get.toNamed(MyRoutes.dashboardscreen);
+                Get.toNamed(MyRoutes.dashboardscreen, arguments: {
+                  "uid": controller.deviceList[index].uid,
+                  "status": controller.deviceList[index].status,
+                  "devicename": controller.deviceList[index].devicename,
+                });
               },
               child: Column(
                 children: [
@@ -79,15 +91,21 @@ class DeviceScreen extends StatelessWidget {
                           children: [
                             Padding(
                               padding: EdgeInsets.only(top: 13.h),
-                              child: titleTextWidget(title: "Vivo"),
+                              child: titleTextWidget(
+                                  title:
+                                      controller.deviceList[index].devicename ??
+                                          ""),
                             ),
                             SizedBox(height: 4.h),
-                            subTitleTextWidget(subTitle: "abcccc"),
+                            subTitleTextWidget(
+                                subTitle:
+                                    controller.deviceList[index].deviceid ??
+                                        ""),
                           ],
                         ),
                       ),
                       SizedBox(height: 10.h),
-                      rightImageWidget()
+                      rightImageWidget(selectedIndex: index),
                     ],
                   ).paddingOnly(left: 17.w, right: 17.w),
                   SizedBox(height: 10.h),
@@ -108,10 +126,11 @@ class DeviceScreen extends StatelessWidget {
     );
   }
 
-  Widget rightImageWidget() {
+  Widget rightImageWidget({required int selectedIndex}) {
     return Center(
       child: InkWell(
         onTap: () {
+          controller.addTextFieldData(selectedIndex);
           addDeviceNetwork(title: CommonString.editDevice);
         },
         child: AssetWidget(
@@ -158,19 +177,19 @@ class DeviceScreen extends StatelessWidget {
 
   Widget deviceNameTextFieldWidget() {
     return commonTextFieldWidget(
-      controller: TextEditingController(),
+      controller: controller.deviceNameController,
       title: CommonString.deviceName.tr,
       hint: CommonString.devicenameplaceholder,
-      focusNode: FocusNode(),
+      focusNode: controller.deviceNameFocusNode.value,
     );
   }
 
   Widget deviceIdTextFieldWidget() {
     return commonTextFieldWidget(
-      controller: TextEditingController(),
+      controller: controller.deviceIdController,
       title: CommonString.deviceId.tr,
       hint: CommonString.deviceidplaceholder,
-      focusNode: FocusNode(),
+      focusNode: controller.deviceIdFocusNode.value,
     );
   }
 
@@ -187,7 +206,7 @@ class DeviceScreen extends StatelessWidget {
   Widget addButtonWidget() {
     return commonButtonWithBorder(
         onPress: () {
-          Get.back();
+          controller.deviceValidation();
         },
         commonButtonBottonText: CommonString.save.tr);
   }
@@ -200,54 +219,59 @@ class DeviceScreen extends StatelessWidget {
   }
 
   addDeviceNetwork({required String title}) {
-    Get.dialog(
-      Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+    Get.dialog(Obx(
+      () => Stack(
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 40),
-            child: Container(
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(20),
-                ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Material(
-                  child: Container(
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 40),
+                child: Container(
+                  decoration: const BoxDecoration(
                     color: Colors.white,
-                    child: Column(
-                      children: [
-                        const SizedBox(height: 10),
-                        addDeviceTextWidget(title),
-                        const SizedBox(height: 15),
-                        deviceNameTextFieldWidget(),
-                        const SizedBox(height: 15),
-                        deviceIdTextFieldWidget(),
-                        SizedBox(height: 20.h),
-                        //Buttons
-                        Row(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(20),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Material(
+                      child: Container(
+                        color: Colors.white,
+                        child: Column(
                           children: [
-                            Expanded(
-                              child: cancelButtonWidget(),
-                            ),
-                            SizedBox(width: 10.w),
-                            Expanded(
-                              child: addButtonWidget(),
+                            const SizedBox(height: 10),
+                            addDeviceTextWidget(title),
+                            const SizedBox(height: 15),
+                            deviceNameTextFieldWidget(),
+                            const SizedBox(height: 15),
+                            deviceIdTextFieldWidget(),
+                            SizedBox(height: 20.h),
+                            //Buttons
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: cancelButtonWidget(),
+                                ),
+                                SizedBox(width: 10.w),
+                                Expanded(
+                                  child: addButtonWidget(),
+                                ),
+                              ],
                             ),
                           ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
+            ],
           ),
+          CommonLoader(isLoading: controller.isShowLoader.value),
         ],
       ),
-    );
+    ));
   }
 }

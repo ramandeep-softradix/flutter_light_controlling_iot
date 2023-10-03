@@ -33,7 +33,7 @@ dependencies:
   get:
   email_validator:
   flutter_screenutil: ^5.9.0
-  connectivity_plus: ^4.0.2
+  connectivity_plus:
   get_storage:
   flutter_svg: ^2.0.7
   cached_network_image: ^3.2.3
@@ -45,10 +45,9 @@ dependencies:
   esp_smartconfig: ^1.1.11
   logger:
   network_info_plus: ^3.0.2
-  firebase_auth: ^4.10.0
-  firebase_core:
   cloud_firestore: ^4.9.1
-
+  firebase_core: ^2.15.1
+  firebase_auth: ^4.9.0
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2

@@ -1,4 +1,3 @@
-import 'package:flutter_smart_lighting/features/Login/binding/login_binding.dart';
 import 'package:flutter_smart_lighting/features/bottom_tabs/binding/bottom_tab_binding.dart';
 import 'package:flutter_smart_lighting/features/bottom_tabs/screen/bottom_tab_screen.dart';
 import 'package:flutter_smart_lighting/features/dashboard/binding/dashboard_binding.dart';
@@ -7,9 +6,11 @@ import 'package:flutter_smart_lighting/features/wifi_login/binding/wifi_binding.
 import 'package:flutter_smart_lighting/features/wifi_login/screen/wifi_login_screen.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:flutter_smart_lighting/Core/utils/common_string.dart';
-import 'package:flutter_smart_lighting/features/Login/screen/login_screen.dart';
-import '../../features/signup/binding/sign_up_binding.dart';
-import '../../features/signup/screen/sign_up_screen.dart';
+
+import '../../features/Auth/Login/binding/login_binding.dart';
+import '../../features/Auth/Login/screen/login_screen.dart';
+import '../../features/Auth/signup/binding/sign_up_binding.dart';
+import '../../features/Auth/signup/screen/sign_up_screen.dart';
 
 class MyRoutes {
   static const String root = "/";

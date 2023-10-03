@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:749299147906:android:b4e0b609f76ba9fd54809b",
+        "mobilesdk_app_id": "1:749299147906:android:c0bff14bd0cd9f2054809b",
         "android_client_info": {
-          "package_name": "com.example.flutterSmartLighting"
+          "package_name": "com.example.flutter_smart_lighting"
         }
       },
       "oauth_client": [],

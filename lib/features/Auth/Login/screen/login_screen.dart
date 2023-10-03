@@ -8,9 +8,9 @@ import 'package:flutter_smart_lighting/Core/common_ui/common_button/common_butto
 import 'package:flutter_smart_lighting/Core/common_ui/text/app_text_widget.dart';
 import 'package:flutter_smart_lighting/Core/common_ui/textfields/app_common_text_form_field.dart';
 import 'package:flutter_smart_lighting/Core/utils/image_resources.dart';
-import 'package:flutter_smart_lighting/features/Login/controller/login_controller.dart';
 
-import '../../../Core/theme/app_color_palette.dart';
+import '../../../../Core/theme/app_color_palette.dart';
+import '../controller/login_controller.dart';
 
 class LoginScreen extends GetView<LoginController> {
   @override

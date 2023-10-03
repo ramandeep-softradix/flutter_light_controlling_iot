@@ -19,21 +19,24 @@ class WifiLoginScreen extends GetView<WifiLoginController> {
     return Obx(() => Scaffold(
         backgroundColor: Colors.white,
         appBar:commonAppBarWidget(title: CommonString.wifiLogin),
-        body: Column(
-          children: [
-            SizedBox(height: 20.h),
-            topImageWidget(),
-            SizedBox(height: 20.h),
-            welcometitleTextWidget(),
-            SizedBox(height: 5.h),
-            filldetailTextWidget(),
-            SizedBox(height: 20.h),
-            emailTextFieldWidget(),
-            SizedBox(height: 20.h),
-            passwordTextFieldWidget(),
-            SizedBox(height: 40.h),
-            loginButtonWidget(),
-          ],
+        body: SingleChildScrollView(
+          physics: RangeMaintainingScrollPhysics(),
+          child: Column(
+            children: [
+              SizedBox(height: 20.h),
+              topImageWidget(),
+              SizedBox(height: 20.h),
+              welcometitleTextWidget(),
+              SizedBox(height: 5.h),
+              filldetailTextWidget(),
+              SizedBox(height: 20.h),
+              emailTextFieldWidget(),
+              SizedBox(height: 20.h),
+              passwordTextFieldWidget(),
+              SizedBox(height: 40.h),
+              loginButtonWidget(),
+            ],
+          ),
         )));
   }
 
