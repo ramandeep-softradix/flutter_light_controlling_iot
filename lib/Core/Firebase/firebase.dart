@@ -6,9 +6,10 @@ import 'package:flutter_smart_lighting/Core/common_ui/snackbar/snackbar.dart';
 import 'dart:io';
 
 class FirebaseInit {
-  Future<void> onIint() async {
+  onIint() async {
     WidgetsFlutterBinding.ensureInitialized();
     if (Platform.isAndroid) {
+      print("Android");
       await Firebase.initializeApp(
           options: const FirebaseOptions(
         apiKey: 'AIzaSyChJXyNevyTnv7OxnFovEKigOKAKuwDRrk',
@@ -17,7 +18,14 @@ class FirebaseInit {
         projectId: 'fluttersmartlighting',
       ));
     } else {
-      await Firebase.initializeApp();
+      print("Ios");
+      await Firebase.initializeApp(
+          options: const FirebaseOptions(
+        apiKey: 'AIzaSyChJXyNevyTnv7OxnFovEKigOKAKuwDRrk',
+        appId: '1:749299147906:ios:39ac11bf6c8203ba54809b',
+        messagingSenderId: '749299147906',
+        projectId: 'fluttersmartlighting',
+      ));
     }
   }
 }

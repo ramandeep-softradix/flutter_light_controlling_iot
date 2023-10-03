@@ -66,6 +66,16 @@ class CommonString  {
 
   static const devicenameplaceholder = "Enter Device Name";
   static const deviceidplaceholder = "Enter Device Id";
+//ChangePassword
+
+  static const oldpassword = "Old Password";
+  static const oldpasswordplaceholder = "Enter Old Password";
+
+  static const newpassword = "New Password";
+  static const newpasswordplaceholder = "Enter New Password";
+
+  static const confirmpassword = "Confirm Password";
+  static const confirmpasswordplaceholder = "Enter Confirm Password";
 
 
 }

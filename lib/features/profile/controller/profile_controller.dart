@@ -35,4 +35,7 @@ class ProfileController extends GetxController {
     await profileProvider.signOut();
     Get.offAllNamed(MyRoutes.root);
   }
+  gotoChangePasswordScreen(){
+    Get.toNamed(MyRoutes.changePassword);
+  }
 }

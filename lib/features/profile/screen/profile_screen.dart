@@ -111,7 +111,9 @@ class ProfileScreen extends GetView<ProfileController> {
 
   Widget changePasswordButtonWidget() {
     return commonButtonWithBorder(
-      onPress: () {},
+      onPress: () {
+        controller.gotoChangePasswordScreen();
+      },
       commonButtonBottonText: CommonString.changePassword.tr,
       bgColor: lightColorPalette.transparentColor,
       textColor: lightColorPalette.black,
