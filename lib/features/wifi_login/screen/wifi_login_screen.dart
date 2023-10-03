@@ -8,7 +8,6 @@ import 'package:flutter_smart_lighting/Core/common_ui/common_button/common_butto
 import 'package:flutter_smart_lighting/Core/common_ui/text/app_text_widget.dart';
 import 'package:flutter_smart_lighting/Core/common_ui/textfields/app_common_text_form_field.dart';
 import 'package:flutter_smart_lighting/Core/utils/image_resources.dart';
-import 'package:flutter_smart_lighting/features/Login/controller/login_controller.dart';
 
 import '../../../Core/appbar/common_appbar.dart';
 import '../../../Core/theme/app_color_palette.dart';
@@ -18,7 +17,7 @@ class WifiLoginScreen extends GetView<WifiLoginController> {
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
         backgroundColor: Colors.white,
-        appBar:commonAppBarWidget(title: CommonString.wifiLogin),
+        appBar: commonAppBarWidget(title: CommonString.wifiLogin),
         body: SingleChildScrollView(
           physics: RangeMaintainingScrollPhysics(),
           child: Column(
@@ -42,7 +41,10 @@ class WifiLoginScreen extends GetView<WifiLoginController> {
 
   Widget topImageWidget() {
     return AssetWidget(
-        asset: Asset(type: AssetType.png, path: ImageResource.wifi),height: 100.h,width: 100.h,);
+      asset: Asset(type: AssetType.png, path: ImageResource.wifi),
+      height: 100.h,
+      width: 100.h,
+    );
   }
 
   Widget welcometitleTextWidget() {
@@ -79,14 +81,14 @@ class WifiLoginScreen extends GetView<WifiLoginController> {
 
   Widget passwordTextFieldWidget() {
     return commonPasswordText(
-            title: CommonString.wifipassword.tr,
-            passwordVisible: controller.passwordVisibility.value,
-            hint: CommonString.wifipasswordplaceholder.tr,
-            controller: controller.passwordController,
-            focusNode: controller.passwordFocusNode(),onPress: (){
-              controller.passwordShowHide();
-    })
-        .paddingOnly(left: 16.w, right: 16.w);
+        title: CommonString.wifipassword.tr,
+        passwordVisible: controller.passwordVisibility.value,
+        hint: CommonString.wifipasswordplaceholder.tr,
+        controller: controller.passwordController,
+        focusNode: controller.passwordFocusNode(),
+        onPress: () {
+          controller.passwordShowHide();
+        }).paddingOnly(left: 16.w, right: 16.w);
   }
 
   Widget loginButtonWidget() {

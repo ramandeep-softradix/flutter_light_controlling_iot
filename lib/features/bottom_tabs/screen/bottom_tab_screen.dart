@@ -7,7 +7,8 @@ import 'package:flutter_smart_lighting/features/bottom_tabs/controller/bottom_ta
 import 'package:flutter_smart_lighting/features/devices/screen/device_screen.dart';
 import 'package:get/get.dart';
 
-import '../../Auth/profile/screen/profile_screen.dart';
+import '../../profile/screen/profile_screen.dart';
+
 
 class BottomTabScreen extends GetView<BottomTabController> {
   @override

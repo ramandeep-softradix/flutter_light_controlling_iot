@@ -11,7 +11,7 @@ import 'Core/utils/Routes.dart';
 
 void main() async {
   await GetStorage.init();
- await FirebaseInit().onIint();
+  await FirebaseInit().onIint();
   runApp(const MyApp());
 }
 

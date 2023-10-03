@@ -2,9 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_smart_lighting/Core/Firebase/devices_list.dart';
 import 'package:flutter_smart_lighting/Core/common_ui/snackbar/snackbar.dart';
-import 'package:get/get.dart';
 import 'dart:io';
 
 class FirebaseInit {

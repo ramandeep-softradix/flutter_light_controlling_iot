@@ -7,10 +7,11 @@ import 'package:flutter_smart_lighting/features/wifi_login/screen/wifi_login_scr
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:flutter_smart_lighting/Core/utils/common_string.dart';
 
-import '../../features/Auth/Login/binding/login_binding.dart';
-import '../../features/Auth/Login/screen/login_screen.dart';
-import '../../features/Auth/signup/binding/sign_up_binding.dart';
-import '../../features/Auth/signup/screen/sign_up_screen.dart';
+import '../../features/Login/binding/login_binding.dart';
+import '../../features/Login/screen/login_screen.dart';
+import '../../features/signup/binding/sign_up_binding.dart';
+import '../../features/signup/screen/sign_up_screen.dart';
+
 
 class MyRoutes {
   static const String root = "/";
