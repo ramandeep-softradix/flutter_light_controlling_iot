@@ -5,6 +5,8 @@ import 'package:flutter_smart_lighting/features/change_password/controller/chang
 import 'package:flutter_smart_lighting/features/change_password/screen/change_password_screen.dart';
 import 'package:flutter_smart_lighting/features/dashboard/binding/dashboard_binding.dart';
 import 'package:flutter_smart_lighting/features/dashboard/screen/dashboard_screen.dart';
+import 'package:flutter_smart_lighting/features/profile/binding/profile_binding.dart';
+import 'package:flutter_smart_lighting/features/profile/screen/profile_screen.dart';
 import 'package:flutter_smart_lighting/features/wifi_login/binding/wifi_binding.dart';
 import 'package:flutter_smart_lighting/features/wifi_login/screen/wifi_login_screen.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
@@ -23,6 +25,8 @@ class MyRoutes {
   static String wifiloginscreen = "/wifiloginscreen";
   static String bottomtabscreen = "/bottomtabscreen";
   static String changePassword = "/changePassword";
+  static String profilescreen = "/profilescreen";
+
 }
 
 List<GetPage> appPages() => [
@@ -68,4 +72,11 @@ List<GetPage> appPages() => [
         binding: ChangePasswordBinding(),
         transition: CommonString.transition,
       ),
+  GetPage(
+    name: MyRoutes.profilescreen,
+    page: () => ProfileScreen(),
+    fullscreenDialog: true,
+    binding: ProfileBinding(),
+    transition: CommonString.transition,
+  )
     ];

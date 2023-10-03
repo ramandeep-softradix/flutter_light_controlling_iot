@@ -50,7 +50,7 @@ class CommonString  {
   static const wifipasswordplaceholder = "Enter Wifi Password";
 
 //Tabs
-  static const home = "Home";
+  static const settings = "Settings";
   static const profile = "Profile";
   static const devices = "Devices";
 // profile
@@ -77,6 +77,8 @@ class CommonString  {
   static const confirmpassword = "Confirm Password";
   static const confirmpasswordplaceholder = "Enter Confirm Password";
 
+//settings
+  static const wifiSetting = "Wifi";
 
 }
 

@@ -16,11 +16,9 @@ commonAppBarWidget({bool isShowBacIcon = true,required String title,bool isBack 
         onPressed: () => isBack ? Get.offNamedUntil(MyRoutes.bottomtabscreen, (route) => false) : Get.back(),
       ),
     ),
-    title: Center(
-      child: AppTextWidget(
-        text: title,
-        style: CustomTextTheme.heading3(color: Colors.white),
-      ),
+    title: AppTextWidget(
+      text: title,
+      style: CustomTextTheme.heading3(color: Colors.white),
     ),
   );
 }

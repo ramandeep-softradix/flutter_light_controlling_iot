@@ -6,6 +6,11 @@ class ImageResource {
 
   static String icnbulb = "assets/images/png/icn_bulb.png";
   static String icnedit = "assets/images/png/icn_edit.png";
+
+  static String icnlogout = "assets/images/png/img_logout.png";
+  static String icnuser = "assets/images/png/img_user.png";
+  static String icnlock = "assets/images/png/img_lock.png";
+
 //svg
   static String hideEye = "assets/images/svg/hideEye.svg";
   static String openEye = "assets/images/svg/openEye.svg";

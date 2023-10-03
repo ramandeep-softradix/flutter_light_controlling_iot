@@ -13,6 +13,12 @@ class ProfileController extends GetxController {
   RxString name = "".obs;
   RxString surname = "".obs;
   RxString useremail = "".obs;
+  RxBool isShowLoader = false.obs;
+
+  setShowLoader({required bool value}) {
+    isShowLoader.value = value;
+    isShowLoader.refresh();
+  }
 
   void onInit() {
     getProfile();
@@ -20,8 +26,10 @@ class ProfileController extends GetxController {
   }
 
   getProfile() async {
+    setShowLoader(value: true);
     String email = Prefs.read(Prefs.email);
     QuerySnapshot? response = await profileProvider.getProfile(email);
+    setShowLoader(value: false);
     if (response != null) {
       final data = User.fromJson(response?.docs.first.data());
       name.value = data.username ?? "";
@@ -30,12 +38,4 @@ class ProfileController extends GetxController {
     }
   }
 
-  logout() async {
-    await Prefs.erase();
-    await profileProvider.signOut();
-    Get.offAllNamed(MyRoutes.root);
-  }
-  gotoChangePasswordScreen(){
-    Get.toNamed(MyRoutes.changePassword);
-  }
 }

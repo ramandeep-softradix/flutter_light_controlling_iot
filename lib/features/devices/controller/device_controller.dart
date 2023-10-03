@@ -13,12 +13,12 @@ class DeviceController extends GetxController {
   var deviceNameFocusNode = FocusNode().obs;
   var deviceIdFocusNode = FocusNode().obs;
   bool singleTap = false;
-  RxBool isShowLoader = false.obs;
   DeviceProvider deviceProvider = DeviceProvider();
   RxBool isUpdate = false.obs;
   RxInt selectedIndex = 0.obs;
 
   RxList<DevicesList> deviceList = <DevicesList>[].obs;
+  RxBool isShowLoader = false.obs;
 
   setShowLoader({required bool value}) {
     isShowLoader.value = value;
