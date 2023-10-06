@@ -16,33 +16,35 @@ class ProfileScreen extends GetView<ProfileController> {
   @override
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
-      backgroundColor: Colors.white,
-      appBar:
-          commonAppBarWidget(title: CommonString.profile),
-      body: SingleChildScrollView(
-        child: Stack(
-          children: [
-            Column(
+          backgroundColor: Colors.white,
+          appBar: commonAppBarWidget(title: CommonString.profile),
+          body: SingleChildScrollView(
+            child: Stack(
               children: [
-                SizedBox(height: 20.h),
-                userImageWidget(),
-                SizedBox(height: 20.h),
-                customTextWidget(CommonString.username,controller.name.value),
-                SizedBox(height: 20.h),
-                customTextWidget(CommonString.usersurname,controller.surname.value),
-                SizedBox(height: 20.h),
-                customTextWidget(CommonString.email,controller.useremail.value),
-                SizedBox(height: 40.h),
-                bottomContainerWidget(),
-                SizedBox(height: 40.h),
+                Column(
+                  children: [
+                    SizedBox(height: 20.h),
+                    userImageWidget(),
+                    SizedBox(height: 20.h),
+                    customTextWidget(
+                        CommonString.username, controller.name.value),
+                    SizedBox(height: 20.h),
+                    customTextWidget(
+                        CommonString.usersurname, controller.surname.value),
+                    SizedBox(height: 20.h),
+                    customTextWidget(
+                        CommonString.email, controller.useremail.value),
+                    SizedBox(height: 40.h),
+                    bottomContainerWidget(),
+                    SizedBox(height: 40.h),
+                    deleteProfileButton()
+                  ],
+                ),
+                CommonLoader(isLoading: controller.isShowLoader.value),
               ],
             ),
-            CommonLoader(isLoading: controller.isShowLoader.value),
-          ],
-        ),
-      ),
-    )
-    );
+          ),
+        ));
   }
 
   Widget userImageWidget() {
@@ -58,9 +60,9 @@ class ProfileScreen extends GetView<ProfileController> {
     );
   }
 
-  Widget customTextWidget(String title,String subTitle) {
+  Widget customTextWidget(String title, String subTitle) {
     return Container(
-        decoration: decoration(isSelected: false),
+        decoration: categioryDecoration(isSelected: false),
         child: Align(
           alignment: Alignment.centerLeft,
           child: Column(
@@ -79,7 +81,6 @@ class ProfileScreen extends GetView<ProfileController> {
                           color: lightColorPalette.black))
                   .paddingOnly(left: 10.w, right: 10.w),
               SizedBox(height: 10.h),
-
             ],
           ),
         )).paddingSymmetric(horizontal: 16.w);
@@ -92,4 +93,9 @@ class ProfileScreen extends GetView<ProfileController> {
     ).paddingOnly(left: 16.w, right: 16.w);
   }
 
+  Widget deleteProfileButton() {
+    return commonButtonWithBorder(
+            commonButtonBottonText: CommonString.deleteAccount, onPress: () {})
+        .paddingSymmetric(horizontal: 16.w);
+  }
 }

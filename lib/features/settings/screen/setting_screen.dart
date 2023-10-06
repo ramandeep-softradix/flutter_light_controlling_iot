@@ -3,9 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_lighting/features/Settings/controller/setting_controller.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-
-import '../../../Core/appbar/common_appbar.dart';
 import '../../../Core/common_ui/asset_widget/common_image_widget.dart';
 import '../../../Core/common_ui/common_button/common_button.dart';
 import '../../../Core/common_ui/text/app_text_widget.dart';

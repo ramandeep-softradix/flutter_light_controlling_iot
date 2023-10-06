@@ -19,6 +19,7 @@ class WifiLoginController extends GetxController {
   var passwordFocusNode = FocusNode().obs;
   bool singleTap = false;
   RxBool passwordVisibility = false.obs;
+  RxList wifiNetwork = [].obs;
 
   RxString wifiSsid = 'N/A'.obs;
   RxString bssid = 'N/A'.obs;
@@ -62,23 +63,31 @@ class WifiLoginController extends GetxController {
 
   Future<void> setNetwork() async {
     final info = NetworkInfo();
-    // var locationStatus = await Permission.location.status;
-    // if (locationStatus.isDenied) {
-    //   await Permission.locationWhenInUse.request();
-    //   print("Here is qwwwer");
-    // }
-    // if (await Permission.location.isRestricted) {
-    //   openAppSettings();
-    // }
-
-      var wifiName = await info.getWifiName();
-      print('wifiName $wifiName');
-      wifiSsid.value = wifiName ?? "";
-      var wifiBssid = await info.getWifiBSSID();
-      print('wifiBssid $wifiBssid');
-      bssid.value = wifiBssid ?? "";
-
+    var wifiName = await info.getWifiName();
+    print('wifiName $wifiName');
+    wifiSsid.value = wifiName ?? "";
+    var wifiBssid = await info.getWifiBSSID();
+    print('wifiBssid $wifiBssid');
+    bssid.value = wifiBssid ?? "";
   }
+
+  // getNearbyWifi() async {
+  //   var locationStatus = await Permission.location.status;
+  //   if (locationStatus.isDenied) {
+  //     await Permission.locationWhenInUse.request();
+  //     print("Here is qwwwer");
+  //   } else if (await Permission.location.isRestricted) {
+  //     openAppSettings();
+  //   } else {
+  //     await WiFiForIoTPlugin.forceWifiUsage(true);
+  //     wifiNetwork.value = await WiFiForIoTPlugin.loadWifiList();
+  //     for (var wifi in wifiNetwork) {
+  //       print(
+  //           'SSID: ${wifi.ssid}, BSSID: ${wifi.bssid}, Signal Strength: ${wifi.level}');
+  //     }
+  //   }
+  // }
+
   validation() async {
     if (!singleTap) {
       if (wifiNameController.text.isEmpty) {
@@ -89,7 +98,7 @@ class WifiLoginController extends GetxController {
         snackbar(Validations.msgminwifipasswordatleast.tr);
       } else {
         gotoDashboardScreen();
-       }
+      }
       singleTap = true;
       Future.delayed(const Duration(seconds: 3))
           .then((value) => singleTap = false);
@@ -132,5 +141,4 @@ class WifiLoginController extends GetxController {
   gotoDashboardScreen() {
     Get.toNamed(MyRoutes.bottomtabscreen);
   }
-
 }

@@ -99,8 +99,7 @@ class AuthenticationHelper {
         "deviceid": deviceid,
         "status": false,
       });
-      await FirebaseFirestore.instance
-          .collection("users")
+      await FirebaseFirestore.instance.collection("users")
           .doc(user.uid)
           .collection("devices")
           .doc(result.id)

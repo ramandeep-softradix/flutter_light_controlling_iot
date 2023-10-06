@@ -56,6 +56,8 @@ class CommonString  {
 // profile
   static const deviceName = "Device Name";
   static const deviceId = "Device Id";
+  static const deleteAccount = "Delete Account";
+
 
   static const changePassword = "Change Password";
 //Device

@@ -60,6 +60,8 @@ class DeviceController extends GetxController {
     deviceList.value = data ?? [];
   }
 
+
+
   deviceValidation() async {
     if (!singleTap) {
       if (deviceNameController.text.isEmpty) {
