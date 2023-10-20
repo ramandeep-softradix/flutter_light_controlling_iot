@@ -7,9 +7,13 @@ class AppColorPalette {
   final MaterialColor secondarySwatch;
   final MaterialColor additionalSwatch1;
   final MaterialColor whiteColorPrimary;
+  final MaterialColor primaryBlack;
+
   final Color transparentColor;
+
   // final Color backgroundColor;
   final Color redDark;
+
   // final Color primaryBlue;
   // final Color primaryDarkblue;
   // final Color stroke;
@@ -41,6 +45,7 @@ class AppColorPalette {
     required this.additionalSwatch1,
     required this.whiteColorPrimary,
     required this.transparentColor,
+    required this.primaryBlack,
     // required this.backgroundColor,
     required this.redDark,
     // required this.primaryBlue,
@@ -69,6 +74,21 @@ class AppColorPalette {
 }
 
 AppColorPalette lightColorPalette = AppColorPalette(
+  primaryBlack: const MaterialColor(
+    0xff000000,
+    const <int, Color>{
+      50: const Color(0xff000000), //10%
+      100: const Color(0xff000000), //20%
+      200: const Color(0xff000000), //30%
+      300: const Color(0xff000000), //40%
+      400: const Color(0xff000000), //50%
+      500: const Color(0xff000000), //60%
+      600: const Color(0xff000000), //70%
+      700: const Color(0xff000000), //80%
+      800: const Color(0xff000000), //90%
+      900: const Color(0xff000000), //100%
+    },
+  ),
   primarySwatch: const MaterialColor(800, {
     900: Color(0xFFFB6900),
     800: Color(0xFFFB6900),
@@ -90,13 +110,13 @@ AppColorPalette lightColorPalette = AppColorPalette(
   }),
   transparentColor: Colors.transparent,
   redDark: const Color(0xFFF51F1F),
-  // backgroundColor: const Color(0xFFEDF4FF),
-  // stroke: const Color(0xFFB3BAC6),
+// backgroundColor: const Color(0xFFEDF4FF),
+// stroke: const Color(0xFFB3BAC6),
   greenBackground: const Color(0xFFE0FFDF),
   greenDark: const Color(0xFF006400),
   primaryBlue: const Color(0xFF0060F7),
-  // black: const Color(0xFF1A4563),
-  // primaryGrey: const Color(0xFF757F8E),
+// black: const Color(0xFF1A4563),
+// primaryGrey: const Color(0xFF757F8E),
   redBackground: const Color(0xFFFFEDED),
   black: const Color(0xFF0A0A0C),
   grey: const Color(0xFF6C6868),
@@ -111,7 +131,8 @@ AppColorPalette lightColorPalette = AppColorPalette(
   royalBlue: const Color(0xff4169E1),
   sunflowerYellow: const Color(0xffFFD700),
   green: Colors.green,
-  orange: const Color(0xffF78500), red1: const Color(0xFFc70000),
+  orange: const Color(0xffF78500),
+  red1: const Color(0xFFc70000),
 );
 // TextTheme lightTextTheme = TextTheme(
 //   ///Heading 1
@@ -371,16 +392,16 @@ BoxDecoration categioryDecoration({required bool isSelected}) {
       color: lightColorPalette.whiteColorPrimary.shade900,
       borderRadius: BorderRadius.circular(10.r),
       shape: BoxShape.rectangle,
-      // boxShadow: isSelected
-      //     ? [
-      //         BoxShadow(
-      //           blurRadius: 14,
-      //           color: lightColorPalette.black.withOpacity(0.20),
-      //           offset: const Offset(0, 6),
-      //           spreadRadius: 0,
-      //         ),
-      //       ]
-      //     : [],
+// boxShadow: isSelected
+//     ? [
+//         BoxShadow(
+//           blurRadius: 14,
+//           color: lightColorPalette.black.withOpacity(0.20),
+//           offset: const Offset(0, 6),
+//           spreadRadius: 0,
+//         ),
+//       ]
+//     : [],
       border: Border.all(
           color: isSelected ? lightColorPalette.black : lightColorPalette.grey,
           width: isSelected ? 1 : 0.3));

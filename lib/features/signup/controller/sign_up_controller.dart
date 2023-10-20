@@ -1,14 +1,13 @@
-import 'dart:io';
 
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_smart_lighting/Core/utils/Extension.dart';
-import 'package:flutter_smart_lighting/features/signup/provider/signup_provider.dart';
 import 'package:get/get.dart';
 
-import '../../../Core/common_ui/snackbar/snackbar.dart';
-import '../../../Core/utils/common_string.dart';
+import '../../../../Core/common_ui/snackbar/snackbar.dart';
+import '../../../../Core/utils/common_string.dart';
+import '../provider/signup_provider.dart';
 
 class SignUpController extends GetxController {
   TextEditingController nameController = TextEditingController();
@@ -23,6 +22,17 @@ class SignUpController extends GetxController {
   SignUpProvider signUpProvider = SignUpProvider();
   Rx<String> pickedImageFile = "".obs;
   bool singleTap = false;
+  RxBool isShowLoader = false.obs;
+  RxBool passwordVisibility = false.obs;
+
+  setShowLoader({required bool value}) {
+    isShowLoader.value = value;
+    isShowLoader.refresh();
+  }
+
+  passwordShowHide() {
+    passwordVisibility.value = !passwordVisibility.value;
+  }
 
   signUpValidation() async {
     if (!singleTap) {
@@ -41,10 +51,18 @@ class SignUpController extends GetxController {
       } else if (!passwordController.text.isValidPassword()) {
         snackbar(Validations.kMsgPasswordAtleast.tr);
       } else {
+        setShowLoader(value: true);
         UserCredential? response = await signUpProvider.signUp(
-            email: emailController.text, password: passwordController.text);
+            email: emailController.text,
+            password: passwordController.text,
+            username: nameController.text,
+            surname: surnameController.text);
+        setShowLoader(value: false);
         if (response?.user?.uid != null) {
           Get.back();
+        }else{
+          setShowLoader(value: false);
+
         }
       }
       singleTap = true;

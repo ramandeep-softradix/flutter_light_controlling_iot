@@ -8,7 +8,6 @@ class WifiLoginBinding implements Bindings {
   @override
   void dependencies() {
     Get.lazyPut<WifiLoginController>(() => WifiLoginController());
-
   }
 
 }

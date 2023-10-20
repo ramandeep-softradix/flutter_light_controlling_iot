@@ -8,15 +8,17 @@ import 'package:get/get.dart';
 import 'package:flutter_smart_lighting/Core/utils/Extension.dart';
 import 'package:flutter_smart_lighting/Core/utils/Routes.dart';
 
-import '../../../Core/utils/common_string.dart';
+import '../../../../Core/storage/local_storage.dart';
+import '../../../../Core/utils/common_string.dart';
 
 class LoginController extends GetxController {
-  RxBool isLoginViewHiden = true.obs;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   var emailFocusNode = FocusNode().obs;
   var passwordFocusNode = FocusNode().obs;
   bool singleTap = false;
+  RxBool isShowLoader = false.obs;
+  RxBool passwordVisibility = false.obs;
 
   addFocusListeners() {
     emailFocusNode.value.addListener(() {
@@ -50,6 +52,15 @@ class LoginController extends GetxController {
     super.onInit();
   }
 
+  setShowLoader({required bool value}) {
+    isShowLoader.value = value;
+    isShowLoader.refresh();
+  }
+
+  passwordShowHide() {
+    passwordVisibility.value = !passwordVisibility.value;
+  }
+
   validation() async {
     if (!singleTap) {
       if (emailController.text.isEmpty) {
@@ -63,10 +74,18 @@ class LoginController extends GetxController {
       } else if (!passwordController.text.isValidPassword()) {
         snackbar(Validations.kMsgPasswordAtleast.tr);
       } else {
+        setShowLoader(value: true);
         UserCredential? response = await AuthenticationHelper().login(
             email: emailController.text, password: passwordController.text);
+        setShowLoader(value: false);
+        print(response);
         if (response?.user?.uid != null) {
-          gotowifiScreen();
+          String? token = response?.user?.uid;
+          String? email = response?.user?.email;
+          Prefs.write(Prefs.email, email);
+          Prefs.write(Prefs.token, token);
+          emptyTextFieldsData();
+          goToBottomTabScreen();
         }
       }
 
@@ -76,11 +95,16 @@ class LoginController extends GetxController {
     }
   }
 
+  emptyTextFieldsData() {
+    emailController.text = "";
+    passwordController.text = "";
+  }
+
   gotoSignupScreen() {
     Get.toNamed(MyRoutes.signUpscreen);
   }
 
-  gotowifiScreen() {
-    Get.toNamed(MyRoutes.wifiloginscreen);
+  goToBottomTabScreen() {
+    Get.toNamed(MyRoutes.bottomtabscreen);
   }
 }

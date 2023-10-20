@@ -1,12 +1,15 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
-class AnimatedToggle extends StatefulWidget {
+class AnimatedToggle extends StatelessWidget {
   final List<String> values;
   final ValueChanged onToggleCallback;
   final Color backgroundColor;
   final Color buttonColor;
   final Color textColor;
   final List<BoxShadow> shadows;
+  late final bool initialPosition;
 
   AnimatedToggle({
     required this.values,
@@ -22,14 +25,8 @@ class AnimatedToggle extends StatefulWidget {
         offset: Offset(0, 5),
       ),
     ],
+    required this.initialPosition,
   });
-
-  @override
-  _AnimatedToggleState createState() => _AnimatedToggleState();
-}
-
-class _AnimatedToggleState extends State<AnimatedToggle> {
-  bool initialPosition = true;
 
   @override
   Widget build(BuildContext context) {
@@ -42,19 +39,17 @@ class _AnimatedToggleState extends State<AnimatedToggle> {
         children: <Widget>[
           GestureDetector(
             onTap: () {
-              initialPosition = !initialPosition;
               var index = 0;
               if (!initialPosition) {
                 index = 1;
               }
-              widget.onToggleCallback(index);
-              setState(() {});
+              onToggleCallback(index);
             },
             child: Container(
               width: width * 0.7,
               height: width * 0.13,
               decoration: ShapeDecoration(
-                color: widget.backgroundColor,
+                color: backgroundColor,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(width * 0.1),
                 ),
@@ -62,11 +57,11 @@ class _AnimatedToggleState extends State<AnimatedToggle> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: List.generate(
-                  widget.values.length,
+                  values.length,
                   (index) => Padding(
                     padding: EdgeInsets.symmetric(horizontal: width * 0.1),
                     child: Text(
-                      widget.values[index],
+                      values[index],
                       style: TextStyle(
                         fontFamily: 'Rubik',
                         fontSize: width * 0.05,
@@ -88,18 +83,18 @@ class _AnimatedToggleState extends State<AnimatedToggle> {
               width: width * 0.35,
               height: width * 0.13,
               decoration: ShapeDecoration(
-                color: widget.buttonColor,
-                shadows: widget.shadows,
+                color: buttonColor,
+                shadows: shadows,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(width * 0.1),
                 ),
               ),
               child: Text(
-                initialPosition ? widget.values[0] : widget.values[1],
+                initialPosition ? values[0] : values[1],
                 style: TextStyle(
                   fontFamily: 'Rubik',
                   fontSize: width * 0.045,
-                  color: widget.textColor,
+                  color: textColor,
                   fontWeight: FontWeight.bold,
                 ),
               ),

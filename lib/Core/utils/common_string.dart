@@ -50,12 +50,14 @@ class CommonString  {
   static const wifipasswordplaceholder = "Enter Wifi Password";
 
 //Tabs
-  static const home = "Home";
+  static const settings = "Settings";
   static const profile = "Profile";
   static const devices = "Devices";
 // profile
   static const deviceName = "Device Name";
   static const deviceId = "Device Id";
+  static const deleteAccount = "Delete Account";
+
 
   static const changePassword = "Change Password";
 //Device
@@ -66,7 +68,19 @@ class CommonString  {
 
   static const devicenameplaceholder = "Enter Device Name";
   static const deviceidplaceholder = "Enter Device Id";
+//ChangePassword
 
+  static const oldpassword = "Old Password";
+  static const oldpasswordplaceholder = "Enter Old Password";
+
+  static const newpassword = "New Password";
+  static const newpasswordplaceholder = "Enter New Password";
+
+  static const confirmpassword = "Confirm Password";
+  static const confirmpasswordplaceholder = "Enter Confirm Password";
+
+//settings
+  static const wifiSetting = "Wifi";
 
 }
 
@@ -89,6 +103,11 @@ class Validations {
 
   static const entervaildwifipassword = "Please enter vaild wifi password";
   static const msgminwifipasswordatleast = "Please enter minimum 8 characters with combination.";
+
+  static const enterdevicename = "Please enter device name";
+
+  static const enterdeviceid = "Please enter device id";
+
 
 }
 

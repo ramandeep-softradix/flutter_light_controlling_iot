@@ -8,7 +8,6 @@ import 'package:flutter_smart_lighting/Core/common_ui/common_button/common_butto
 import 'package:flutter_smart_lighting/Core/common_ui/text/app_text_widget.dart';
 import 'package:flutter_smart_lighting/Core/common_ui/textfields/app_common_text_form_field.dart';
 import 'package:flutter_smart_lighting/Core/utils/image_resources.dart';
-import 'package:flutter_smart_lighting/features/Login/controller/login_controller.dart';
 
 import '../../../Core/appbar/common_appbar.dart';
 import '../../../Core/theme/app_color_palette.dart';
@@ -18,31 +17,37 @@ class WifiLoginScreen extends GetView<WifiLoginController> {
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
         backgroundColor: Colors.white,
-        appBar:commonAppBarWidget(title: CommonString.wifiLogin),
-        body: Column(
-          children: [
-            SizedBox(height: 20.h),
-            topImageWidget(),
-            SizedBox(height: 20.h),
-            welcometitleTextWidget(),
-            SizedBox(height: 5.h),
-            filldetailTextWidget(),
-            SizedBox(height: 20.h),
-            emailTextFieldWidget(),
-            SizedBox(height: 20.h),
-            passwordTextFieldWidget(),
-            SizedBox(height: 40.h),
-            loginButtonWidget(),
-          ],
+        appBar: commonAppBarWidget(title: CommonString.wifiLogin),
+        body: SingleChildScrollView(
+          physics: RangeMaintainingScrollPhysics(),
+          child: Column(
+            children: [
+              SizedBox(height: 20.h),
+              topImageWidget(),
+              SizedBox(height: 20.h),
+              welcomeTitleTextWidget(),
+              SizedBox(height: 5.h),
+              fillDetailTextWidget(),
+              SizedBox(height: 20.h),
+              emailTextFieldWidget(),
+              SizedBox(height: 20.h),
+              passwordTextFieldWidget(),
+              SizedBox(height: 40.h),
+              loginButtonWidget(),
+            ],
+          ),
         )));
   }
 
   Widget topImageWidget() {
     return AssetWidget(
-        asset: Asset(type: AssetType.png, path: ImageResource.wifi),height: 100.h,width: 100.h,);
+      asset: Asset(type: AssetType.png, path: ImageResource.wifi),
+      height: 100.h,
+      width: 100.h,
+    );
   }
 
-  Widget welcometitleTextWidget() {
+  Widget welcomeTitleTextWidget() {
     return Align(
       alignment: Alignment.topLeft,
       child: AppTextWidget(
@@ -54,7 +59,7 @@ class WifiLoginScreen extends GetView<WifiLoginController> {
     );
   }
 
-  Widget filldetailTextWidget() {
+  Widget fillDetailTextWidget() {
     return Align(
       alignment: Alignment.centerLeft,
       child: AppTextWidget(
@@ -76,12 +81,14 @@ class WifiLoginScreen extends GetView<WifiLoginController> {
 
   Widget passwordTextFieldWidget() {
     return commonPasswordText(
-            title: CommonString.wifipassword.tr,
-            passwordVisible: true,
-            hint: CommonString.wifipasswordplaceholder.tr,
-            controller: controller.passwordController,
-            focusNode: controller.passwordFocusNode())
-        .paddingOnly(left: 16.w, right: 16.w);
+        title: CommonString.wifipassword.tr,
+        passwordVisible: controller.passwordVisibility.value,
+        hint: CommonString.wifipasswordplaceholder.tr,
+        controller: controller.passwordController,
+        focusNode: controller.passwordFocusNode(),
+        onPress: () {
+          controller.passwordShowHide();
+        }).paddingOnly(left: 16.w, right: 16.w);
   }
 
   Widget loginButtonWidget() {
@@ -92,4 +99,5 @@ class WifiLoginScreen extends GetView<WifiLoginController> {
             commonButtonBottonText: CommonString.connect.tr)
         .paddingOnly(left: 16.w, right: 16.w);
   }
+
 }
