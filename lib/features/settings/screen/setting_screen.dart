@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_smart_lighting/Core/utils/Routes.dart';
 import 'package:flutter_smart_lighting/features/Settings/controller/setting_controller.dart';
 import 'package:get/get.dart';
 import '../../../Core/common_ui/asset_widget/common_image_widget.dart';
@@ -48,8 +49,13 @@ class SettingScreen extends StatelessWidget {
               icon: ImageResource.icnuser,
             ),
           ),
-          gridTileView(
-              title: CommonString.wifiSetting, icon: ImageResource.wifi),
+          InkWell(
+            onTap: (){
+Get.toNamed(MyRoutes.wifiloginscreen);
+            },
+            child: gridTileView(
+                title: CommonString.wifiSetting, icon: ImageResource.wifi),
+          ),
           InkWell(
               onTap: () {
                 settingController.gotoChangePasswordScreen();

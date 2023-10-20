@@ -34,7 +34,6 @@ class LoginController extends GetxController {
     passwordFocusNode.value.removeListener(() {});
   }
 
-
   @override
   void onClose() {
     disposeFocusListeners();
@@ -57,6 +56,7 @@ class LoginController extends GetxController {
     isShowLoader.value = value;
     isShowLoader.refresh();
   }
+
   passwordShowHide() {
     passwordVisibility.value = !passwordVisibility.value;
   }
@@ -85,7 +85,7 @@ class LoginController extends GetxController {
           Prefs.write(Prefs.email, email);
           Prefs.write(Prefs.token, token);
           emptyTextFieldsData();
-          gotowifiScreen();
+          goToBottomTabScreen();
         }
       }
 
@@ -98,14 +98,13 @@ class LoginController extends GetxController {
   emptyTextFieldsData() {
     emailController.text = "";
     passwordController.text = "";
-
   }
 
   gotoSignupScreen() {
     Get.toNamed(MyRoutes.signUpscreen);
   }
 
-  gotowifiScreen() {
-    Get.toNamed(MyRoutes.wifiloginscreen);
+  goToBottomTabScreen() {
+    Get.toNamed(MyRoutes.bottomtabscreen);
   }
 }

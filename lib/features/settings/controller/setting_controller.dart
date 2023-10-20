@@ -20,4 +20,10 @@ class SettingController extends GetxController {
      Get.toNamed(MyRoutes.changePassword);
    }
 
+
+  void gotoWifiScreen() {
+    Get.toNamed(MyRoutes.wifiloginscreen);
+
+  }
+
 }

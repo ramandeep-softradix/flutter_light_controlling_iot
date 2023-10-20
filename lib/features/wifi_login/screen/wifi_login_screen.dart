@@ -25,9 +25,9 @@ class WifiLoginScreen extends GetView<WifiLoginController> {
               SizedBox(height: 20.h),
               topImageWidget(),
               SizedBox(height: 20.h),
-              welcometitleTextWidget(),
+              welcomeTitleTextWidget(),
               SizedBox(height: 5.h),
-              filldetailTextWidget(),
+              fillDetailTextWidget(),
               SizedBox(height: 20.h),
               emailTextFieldWidget(),
               SizedBox(height: 20.h),
@@ -47,7 +47,7 @@ class WifiLoginScreen extends GetView<WifiLoginController> {
     );
   }
 
-  Widget welcometitleTextWidget() {
+  Widget welcomeTitleTextWidget() {
     return Align(
       alignment: Alignment.topLeft,
       child: AppTextWidget(
@@ -59,7 +59,7 @@ class WifiLoginScreen extends GetView<WifiLoginController> {
     );
   }
 
-  Widget filldetailTextWidget() {
+  Widget fillDetailTextWidget() {
     return Align(
       alignment: Alignment.centerLeft,
       child: AppTextWidget(
@@ -99,4 +99,5 @@ class WifiLoginScreen extends GetView<WifiLoginController> {
             commonButtonBottonText: CommonString.connect.tr)
         .paddingOnly(left: 16.w, right: 16.w);
   }
+
 }

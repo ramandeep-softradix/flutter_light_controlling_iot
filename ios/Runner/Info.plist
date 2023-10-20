@@ -2,6 +2,15 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>Used to Location's Info always for Using Beacon.</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>Used to Location's Info always for Using Beacon.</string>
+     <key>NSLocationWhenInUseUsageDescription</key>
+     <string>Used to Location's Info for Using Beacon when In Use.</string>
+     <key>FLTEnableImpeller</key>
+     <false />
+
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>

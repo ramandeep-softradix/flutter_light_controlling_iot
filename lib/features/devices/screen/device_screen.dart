@@ -29,6 +29,7 @@ class DeviceScreen extends StatelessWidget {
         backgroundColor: lightColorPalette.black,
         onPressed: () {
           controller.isUpdate.value = false;
+          controller.emptyTextFieldsData();
           addDeviceNetwork(title: CommonString.addDevice);
         },
       ),

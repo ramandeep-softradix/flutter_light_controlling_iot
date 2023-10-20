@@ -44,7 +44,9 @@ class LoginScreen extends GetView<LoginController> {
               CommonLoader(isLoading: controller.isShowLoader.value),
             ],
           ),
-        )));
+        )
+    )
+    );
   }
 
   Widget topImageWidget() {

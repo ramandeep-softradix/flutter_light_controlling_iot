@@ -1,9 +1,9 @@
-import 'dart:ffi';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_smart_lighting/Core/Firebase/firebase.dart';
 
 class DeviceProvider {
+
   Future<DocumentReference?> addDeviceList(
       {required String devicename, required String deviceid}) async {
     final DocumentReference? result = await AuthenticationHelper()
@@ -30,10 +30,9 @@ class DeviceProvider {
     return result;
   }
 
-
-
   Future<QuerySnapshot?> getAllDevices() async {
     final QuerySnapshot? response  = await AuthenticationHelper().getAllDeviceDocumentData();
     return response;
   }
+
 }

@@ -1,16 +1,19 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:esp_smartconfig/esp_smartconfig.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_blue/flutter_blue.dart';
 import 'package:flutter_smart_lighting/Core/common_ui/snackbar/snackbar.dart';
 import 'package:get/get.dart';
 import 'package:flutter_smart_lighting/Core/utils/Routes.dart';
-import 'package:get_storage/get_storage.dart';
 
 import 'package:loggerx/loggerx.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../../../Core/utils/common_string.dart';
-
+import 'package:http/http.dart' as http;
 class WifiLoginController extends GetxController {
   RxBool isLoginViewHiden = true.obs;
   TextEditingController wifiNameController = TextEditingController();
@@ -23,6 +26,10 @@ class WifiLoginController extends GetxController {
 
   RxString wifiSsid = 'N/A'.obs;
   RxString bssid = 'N/A'.obs;
+  var client = HttpClient();
+  final flutterBlue = FlutterBlue.instance;
+  BluetoothDevice? selectedDevice;
+
 
   passwordShowHide() {
     passwordVisibility.value = !passwordVisibility.value;
@@ -65,28 +72,25 @@ class WifiLoginController extends GetxController {
     final info = NetworkInfo();
     var wifiName = await info.getWifiName();
     print('wifiName $wifiName');
-    wifiSsid.value = wifiName ?? "";
+    wifiNameController.text = wifiName!;
     var wifiBssid = await info.getWifiBSSID();
     print('wifiBssid $wifiBssid');
-    bssid.value = wifiBssid ?? "";
+    bssid.value = wifiBssid!;
+    var wifiIp = await info.getWifiIP();
+    print('wifiIp $wifiIp');
   }
 
-  // getNearbyWifi() async {
-  //   var locationStatus = await Permission.location.status;
-  //   if (locationStatus.isDenied) {
-  //     await Permission.locationWhenInUse.request();
-  //     print("Here is qwwwer");
-  //   } else if (await Permission.location.isRestricted) {
-  //     openAppSettings();
-  //   } else {
-  //     await WiFiForIoTPlugin.forceWifiUsage(true);
-  //     wifiNetwork.value = await WiFiForIoTPlugin.loadWifiList();
-  //     for (var wifi in wifiNetwork) {
-  //       print(
-  //           'SSID: ${wifi.ssid}, BSSID: ${wifi.bssid}, Signal Strength: ${wifi.level}');
-  //     }
-  //   }
-  // }
+  getNearbyWifi() async {
+    var locationStatus = await Permission.location.status;
+    if (locationStatus.isDenied) {
+      await Permission.locationWhenInUse.request();
+      print("Here is qwwwer");
+    } else if (await Permission.location.isRestricted) {
+      openAppSettings();
+    } else {
+      setNetwork();
+    }
+  }
 
   validation() async {
     if (!singleTap) {
@@ -97,41 +101,12 @@ class WifiLoginController extends GetxController {
       } else if (passwordController.text.length < 8) {
         snackbar(Validations.msgminwifipasswordatleast.tr);
       } else {
-        gotoDashboardScreen();
+
       }
       singleTap = true;
       Future.delayed(const Duration(seconds: 3))
           .then((value) => singleTap = false);
     }
-  }
-
-  void smartConfig({required String ssid, required String password}) async {
-    logging.level = LogLevel.debug;
-
-    final provisioner = Provisioner.espTouch();
-
-    await provisioner.listen((response) {
-      log.info("\n"
-          "\n------------------------------------------------------------------------\n"
-          "Device ($response) is connected to WiFi!"
-          "\n------------------------------------------------------------------------\n");
-    });
-
-    try {
-      await provisioner.start(ProvisioningRequest.fromStrings(
-        ssid: ssid,
-        bssid: bssid.value,
-        password: password,
-      ));
-      print("ssid $ssid");
-      print("password $password");
-
-      await Future.delayed(Duration(seconds: 10));
-    } catch (e, s) {
-      log.error(e, s);
-    }
-    snackbar("Not Connected!");
-    provisioner.stop();
   }
 
   gotoSignupScreen() {
@@ -141,4 +116,5 @@ class WifiLoginController extends GetxController {
   gotoDashboardScreen() {
     Get.toNamed(MyRoutes.bottomtabscreen);
   }
+
 }

@@ -2,11 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_smart_lighting/features/devices/provider/device_provider.dart';
 import 'package:get/get.dart';
+import 'package:network_info_plus/network_info_plus.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:wifi_iot/wifi_iot.dart';
 
 import '../../../Core/Firebase/devices_list.dart';
 import '../../../Core/common_ui/snackbar/snackbar.dart';
 import '../../../Core/utils/common_string.dart';
-
 class DeviceController extends GetxController {
   TextEditingController deviceNameController = TextEditingController();
   TextEditingController deviceIdController = TextEditingController();
@@ -19,6 +21,14 @@ class DeviceController extends GetxController {
 
   RxList<DevicesList> deviceList = <DevicesList>[].obs;
   RxBool isShowLoader = false.obs;
+
+
+  @override
+  void onInit() {
+    addFocusListeners();
+    getDevices();
+    super.onInit();
+  }
 
   setShowLoader({required bool value}) {
     isShowLoader.value = value;
@@ -119,10 +129,27 @@ class DeviceController extends GetxController {
     super.dispose();
   }
 
+
+}
+class WifiNetwork {
+  final String ssid;
+  final String bssid;
+  final int level;
+  final int frequency;
+  final String capabilities;
+
+  WifiNetwork({
+    required this.ssid,
+    required this.bssid,
+    required this.level,
+    required this.frequency,
+    required this.capabilities,
+  });
+
+  bool get isOpenNetwork => capabilities.contains("WEP") || capabilities.contains("WPA");
+
   @override
-  void onInit() {
-    addFocusListeners();
-    getDevices();
-    super.onInit();
+  String toString() {
+    return 'SSID: $ssid, BSSID: $bssid, Signal Strength: $level, Frequency: $frequency, Capabilities: $capabilities';
   }
 }
