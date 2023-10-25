@@ -10,6 +10,7 @@ import 'dart:io';
 class DashboardController extends GetxController
     with GetSingleTickerProviderStateMixin {
   RxBool isDarkMode = false.obs;
+  RxBool lightonoff = false.obs;
   var deviceModel = Get.arguments;
   RxString devicename = "".obs;
   String lightStatus = "";
@@ -19,7 +20,7 @@ class DashboardController extends GetxController
   late AnimationController animationController;
   DeviceProvider deviceProvider = DeviceProvider();
   final dio = Dio();
-  final String esp32IpAddress = '192.168.140.104';
+  final String esp32IpAddress = '192.168.93.104';
 
   @override
   void onInit() {
@@ -40,8 +41,23 @@ class DashboardController extends GetxController
 
   Future<void> toggleLight(String state) async {
     try {
-      final response = await http.get(Uri.http(esp32IpAddress, '/toggle', {'state': state}));
+
+      String ipAddress = esp32IpAddress;
+
+      // light on karne ke liye request
+      String onRequest = 'http://192.168.1.100/on';
+
+      // light off karne ke liye request
+      String offRequest = 'http://192.168.1.100/off';
+
+      // light on/off karne ki request send karna
+      final response= await http.get(isDarkMode.value==false ? Uri.parse(offRequest) : Uri.parse(onRequest));
+
+
+
+      // final response = await http.get(Uri.http(esp32IpAddress, '/toggle', {'state': state}));
       print("Here is response ${response.statusCode}");
+      print("Here is response ${response.body}");
 
       if (response.statusCode == 200) {
         print('Light is $state');
