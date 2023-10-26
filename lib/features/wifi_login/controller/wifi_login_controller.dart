@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -126,28 +127,16 @@ class WifiLoginController extends GetxController {
     }
   }
   shareWifiSsidPassword() async{
-     FlutterBluePlus.scanResults.listen((results) {
-       
-       var deviceName="ESP32-Bluetooth-WiFi";
-       var result=results;
-          var k=result.where((element) => element.device.platformName.toLowerCase()==deviceName.toString().toLowerCase());
-       if (k.first.device.platformName == "ESP32-Bluetooth-WiFi") {
-         print("connected");
-         // connectAndSendData(result.device);
-         k.first.device.connect();
-        
-       }
-       
-       // for (ScanResult result in results) {
-       //   // print("test >>>>${result.device}");
-       //   if (result.device.platformName.toString() == "ESP32-Bluetooth-WiFi") {
-       //     print("connected");
-       //     // connectAndSendData(result.device);
-       //     result.device.connect();
-       //     break;
-       //   }
-       // }
-     });
+    FlutterBluePlus.startScan(timeout: Duration(seconds: 4));
+
+    FlutterBluePlus.scanResults.listen((results) {
+      for (ScanResult result in results) {
+        if (result.device.platformName == "ESP32-Bluetooth-WiFi") {
+          connectAndSendData(result.device);
+          break;
+        }
+      }
+    });
     FlutterBluePlus.startScan();
   }
   gotoSignupScreen() {
@@ -159,31 +148,31 @@ class WifiLoginController extends GetxController {
   }
 
   void connectAndSendData(BluetoothDevice device) async {
-      await device.connect();
-      List<BluetoothService> services = await device.discoverServices();
+    await device.connect();
+    List<BluetoothService> services = await device.discoverServices();
 
-      for (BluetoothService service in services) {
-        for (BluetoothCharacteristic characteristic in service.characteristics) {
-          if (characteristic.uuid.toString() == "SSID_Characteristic") {
-            // Format SSID data as bytes
-            String ssid = "vivo Y20T"; // Replace with your SSID
-            List<int> ssidBytes = ssid.codeUnits;
+    for (BluetoothService service in services) {
+      for (BluetoothCharacteristic characteristic in service.characteristics) {
+        if (characteristic.uuid.toString() == "SSID_Characteristic") {
+          // Format SSID data as bytes
+          String ssid = "YourSSID"; // Replace with your SSID
+          List<int> ssidBytes = ssid.codeUnits;
 
-            // Write SSID data
-            await characteristic.write(ssidBytes, withoutResponse: true);
-          } else if (characteristic.uuid.toString() == "Password_Characteristic") {
-            // Format password data as bytes
-            String password = "123456799"; // Replace with your password
-            List<int> passwordBytes = password.codeUnits;
+          // Write SSID data
+          await characteristic.write(ssidBytes, withoutResponse: true);
+        } else if (characteristic.uuid.toString() == "Password_Characteristic") {
+          // Format password data as bytes
+          String password = "YourPassword"; // Replace with your password
+          List<int> passwordBytes = password.codeUnits;
 
-            // Write password data
-            await characteristic.write(passwordBytes, withoutResponse: true);
-          }
+          // Write password data
+          await characteristic.write(passwordBytes, withoutResponse: true);
         }
       }
+    }
 
-      // Disconnect from the ESP32 after sending data
-      device.disconnect();
+    // Disconnect from the ESP32 after sending data
+    device.disconnect();
 
   }
 
